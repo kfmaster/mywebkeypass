@@ -14,7 +14,7 @@ tgt_filename=MyKeePass.kdbx
 while true
 do
     cd ${tgt_dir}
-    /bin/ping -c 5 -t 1 ${source_server} 1>/dev/null 2>&1
+    /bin/ping -c 5 ${source_server} 1>/dev/null 2>&1
     if [ $? -eq 0 ]; then
         wget_output=$(wget -q ${source_url})
         if [ $? -eq 0 ]; then
