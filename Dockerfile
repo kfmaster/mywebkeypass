@@ -6,7 +6,7 @@ RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf \
 && echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf \
 && echo 'deb http://security.ubuntu.com/ubuntu trusty-security main' >> /etc/apt/sources.list \
 && apt-get -y update \
-&& apt-get install -qy git wget build-essential openssl expat libexpat1-dev libssl-dev libxml-parser-perl \
+&& apt-get install -qy git wget build-essential openssl expat libexpat1-dev libssl-dev libxml-parser-perl nginx \
 && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 COPY perlbrew.sh /usr/bin/perlbrew.sh
@@ -36,6 +36,7 @@ RUN cd /srv/webkeepass; dzil authordeps | cpanm -nq && dzil listdeps | cpanm -nq
 COPY app.pl /srv/webkeepass/bin/
 COPY production.yml /srv/webkeepass/environments/
 COPY WebKeePass.pm /srv/webkeepass/lib/
+COPY proxy.conf /etc/nginx/conf.d/proxy.conf
 COPY start.sh /
 
 RUN chmod +x /srv/webkeepass/bin/app.pl \
@@ -43,7 +44,7 @@ RUN chmod +x /srv/webkeepass/bin/app.pl \
 
 VOLUME /keepass
 
-EXPOSE 5001
+EXPOSE 80 5001
 
 RUN cd /srv/webkeepass \
 && cpanm Dancer2::Plugin::Ajax 
