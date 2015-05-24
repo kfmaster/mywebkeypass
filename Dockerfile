@@ -21,9 +21,9 @@ COPY cpanm /opt/cpanm
 RUN chmod +x /opt/cpanm
 
 RUN ln -s /opt/cpanm /usr/bin/ \
-&& mkdir -p /srv/webkeepass \
-&& cd /srv/webkeepass \
-&& cpanm Moose::Role \ 
+&& mkdir -p /srv/webkeepass/WebKeePass 
+
+RUN cd /srv/webkeepass; cpanm Moose::Role \
 && cpanm MooseX::Types \ 
 && cpanm Config::MVP \ 
 && cpanm Moose::Util \
@@ -35,16 +35,20 @@ RUN ln -s /opt/cpanm /usr/bin/ \
 && cpanm Software::License \
 && cpanm Dancer2 \
 && cpanm Digest::SHA1 \ 
-&& cpanm XML::Parser  
+&& cpanm XML::Parser \ 
+&& cpanm Dancer2::Plugin::Ajax \
+&& cpanm File::KeePass \
+&& cpanm Dist::Zilla 
 
 ADD webkeepass.tar.gz /srv/webkeepass/
-RUN cd /srv/webkeepass; dzil authordeps | cpanm -nq && dzil listdeps | cpanm -nq \
-&& rm /srv/webkeepass/bin/app.pl \
-&& rm /srv/webkeepass/lib/WebKeePass.pm 
+RUN cd /srv/webkeepass; /usr/local/bin/dzil authordeps | cpanm -nq && dzil listdeps | cpanm -nq 
+
+RUN rm /srv/webkeepass/bin/app.pl 
+RUN  rm /srv/webkeepass/lib/WebKeePass.pm
 
 COPY app.pl /srv/webkeepass/bin/
-COPY production.yml /srv/webkeepass/environments/
 COPY WebKeePass.pm /srv/webkeepass/lib/
+COPY production.yml /srv/webkeepass/environments/
 COPY proxy.conf /etc/nginx/conf.d/proxy.conf
 COPY start.sh /
 
@@ -54,9 +58,5 @@ RUN chmod +x /srv/webkeepass/bin/app.pl \
 VOLUME /keepass
 
 EXPOSE 80 5001
-
-RUN cd /srv/webkeepass \
-&& cpanm Dancer2::Plugin::Ajax \
-&& cpanm Dist::Zilla 
 
 CMD ["/start.sh"]
