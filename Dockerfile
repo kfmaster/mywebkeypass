@@ -1,5 +1,6 @@
 FROM ubuntu:latest
-MAINTAINER James Jones "velocity303@gmail.com"
+# Original Author and MAINTAINER is: James Jones "velocity303@gmail.com"
+MAINTAINER kfmaster "fuhaiou@hotmail.com"
 
 RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf \
 && echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf \

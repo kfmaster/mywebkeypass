@@ -1,3 +1,6 @@
+# Original Author and MAINTAINER is: James Jones "velocity303@gmail.com"
+Slightly modifed by MAINTAINER kfmaster "fuhaiou@hotmail.com" to adapt my own use case.
+
 webkeepass-docker
 =================
 
