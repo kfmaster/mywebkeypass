@@ -21,4 +21,5 @@ do
            wget ${source_url} -O ${tgt_dir}/${tgt_filename}
         fi
     fi
+    rm -f /keepass/current_keypass.kdb.*
 done
