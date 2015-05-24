@@ -23,6 +23,7 @@ RUN chmod +x /opt/cpanm
 RUN ln -s /opt/cpanm /usr/bin/ \
 && mkdir -p /srv/webkeepass \
 && cd /srv/webkeepass \
+&& cpanm Software::License \
 && cpanm Dist::Zilla \
 && cpanm Dancer2 \
 && cpanm Digest::SHA1 \ 
