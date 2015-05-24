@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM library/ubuntu:latest
 # Original Author and MAINTAINER is: James Jones "velocity303@gmail.com"
 MAINTAINER kfmaster "fuhaiou@hotmail.com"
 
