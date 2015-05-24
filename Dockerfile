@@ -23,8 +23,16 @@ RUN chmod +x /opt/cpanm
 RUN ln -s /opt/cpanm /usr/bin/ \
 && mkdir -p /srv/webkeepass \
 && cd /srv/webkeepass \
+&& cpanm Moose::Role \ 
+&& cpanm MooseX::Types \ 
+&& cpanm Config::MVP \ 
+&& cpanm Moose::Util \
+&& cpanm MooseX::LazyRequire \
+&& cpanm Perl::PrereqScanner \
+&& cpanm MooseX::SetOnce \
+&& cpanm Data::Section \
+&& cpanm Software::LicenseUtils \
 && cpanm Software::License \
-&& cpanm Dist::Zilla \
 && cpanm Dancer2 \
 && cpanm Digest::SHA1 \ 
 && cpanm XML::Parser  
@@ -48,6 +56,7 @@ VOLUME /keepass
 EXPOSE 80 5001
 
 RUN cd /srv/webkeepass \
-&& cpanm Dancer2::Plugin::Ajax 
+&& cpanm Dancer2::Plugin::Ajax \
+&& cpanm Dist::Zilla 
 
 CMD ["/start.sh"]
