@@ -2,7 +2,7 @@
 DANCER_PORT=5001 DANCER_ENVIRONMENT=production perl /srv/webkeepass/bin/app.pl &
 
 source_filename=current_keypass.kdb
-source_server=mykeystore
+source_server=mykeystore-kfmaster.alaudacn.me
 source_dir=keypass_store
 source_url=http://${source_server}/${source_dir}/${source_filename}
 
