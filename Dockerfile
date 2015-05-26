@@ -6,7 +6,7 @@ RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf \
 && echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf \
 && echo 'deb http://security.ubuntu.com/ubuntu trusty-security main' >> /etc/apt/sources.list \
 && apt-get -y update \
-&& apt-get install -qy git wget build-essential openssl expat libexpat1-dev libssl-dev libxml-parser-perl nginx \
+&& apt-get install -qy git wget build-essential openssl expat libexpat1-dev libssl-dev libxml-parser-perl nginx supervisor \
 && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 COPY perlbrew.sh /usr/bin/perlbrew.sh
@@ -51,12 +51,17 @@ COPY WebKeePass.pm /srv/webkeepass/lib/
 COPY production.yml /srv/webkeepass/environments/
 COPY proxy.conf /etc/nginx/conf.d/proxy.conf
 COPY start.sh /
+COPY retrieve_kdbfile.sh /root/retrieve_kdbfile.sh
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# In order to use supervisord, nginx needs run in foreground
 RUN chmod +x /srv/webkeepass/bin/app.pl \
+&& echo "daemon off;" >> /etc/nginx/nginx.conf \
 && chmod +x /start.sh
 
 VOLUME /keepass
 
-EXPOSE 80 5001
+# Port 80 for reverse proxy, port 5001 is webkeepass port, port 9001 is admin port for supervisord
+EXPOSE 80 5001 9001
 
 CMD ["/start.sh"]
