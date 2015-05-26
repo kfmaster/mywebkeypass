@@ -12,7 +12,7 @@
     In order for nginx to be controled by supervisord, I need add "daemon off;" to the main nginx.conf to run nginx in foreground;
     I am experimenting on process group feature in supervisord, however it seems the supervisord version comes with this image is 
     3.0b2 and does not properly support the process group stop as group feature; I still have to stop/restart process individually. 
-    I will try to insta    ll latest supervisord from github to try again;
+    I will try to install latest supervisord from github to try again;
     I exposed port 9001 for supervisord, the default login is set to: admin/Secret123 .      
 
 webkeepass-docker
